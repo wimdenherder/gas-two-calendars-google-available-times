@@ -11,6 +11,7 @@ function main() {
     minBlockDuration
   );
   // debug & log here
+  Logger.log(res);
 }
 
 function getAvailableTimeSlots(
