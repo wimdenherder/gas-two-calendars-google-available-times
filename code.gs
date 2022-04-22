@@ -1,9 +1,9 @@
 function main() {
-  let day = new Date(2020, 4, 4);
-  let startTime = "8:00";
-  let endTime = "19:00";
-  let minBlockDuration = 60;
-  let res = getAvailableTimeSlots(
+  const day = new Date(2020, 4, 4);
+  const startTime = "8:00";
+  const endTime = "19:00";
+  const minBlockDuration = 60;
+  const res = getAvailableTimeSlots(
     ["Person1", "Person2", "Person3"],
     day,
     startTime,
@@ -21,11 +21,11 @@ function getAvailableTimeSlots(
   endTime,
   minBlockDuration
 ) {
-  let calsEvents = calNames.map((calName) => getEventsForCal(calName, day));
+  const calsEvents = calNames.map((calName) => getEventsForCal(calName, day));
   [startTimeToMinuteIndex, endTimeToMinuteIndex] = [startTime, endTime].map(
     (time) => dayAndTimeToMinuteIndex(day, time)
   );
-  let availableMinutes = getAvailableMinutes(
+  const availableMinutes = getAvailableMinutes(
     startTimeToMinuteIndex,
     endTimeToMinuteIndex,
     calsEvents
@@ -34,7 +34,7 @@ function getAvailableTimeSlots(
 }
 
 const getAvailableBlocks = (availableMinutes, minBlockDuration) => {
-  let availableBlocks = [];
+  const availableBlocks = [];
   availableMinutes.sort();
   for (let i = 0; i < availableMinutes.length; i++) {
     let min = availableMinutes[i];
@@ -55,7 +55,7 @@ const getAvailableMinutes = (
   endTimeToMinuteIndex,
   calsEvents
 ) => {
-  let availableMinutes = [];
+  const availableMinutes = [];
   for (let min = startTimeToMinuteIndex; min < endTimeToMinuteIndex; min++) {
     if (!calsEvents.some((calEvents) => calEvents.containsMinute(min)))
       availableMinutes.push(min);
@@ -70,14 +70,14 @@ const dayAndTimeToMinuteIndex = (day, time) => {
 };
 
 const displayDate = (min) => {
-  let date = new Date(min * 60 * 1000);
+  const date = new Date(min * 60 * 1000);
   return date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2);
 };
 
 const getEventsForCal = (nameCal, day) => {
-  let cal = CalendarApp.getCalendarsByName(nameCal)[0];
-  let calEvents = cal.getEventsForDay(day);
-  let eventsWithTimes = calEvents.map(function (calEvent) {
+  const cal = CalendarApp.getCalendarsByName(nameCal)[0];
+  const calEvents = cal.getEventsForDay(day);
+  const eventsWithTimes = calEvents.map(function (calEvent) {
     return new Event(calEvent);
   });
   return new Events(eventsWithTimes);
